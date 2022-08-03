@@ -42,13 +42,13 @@ jobs:
                   budgetPath: '.github/lighthouse/budget.json'
                   uploadArtifacts: true
                   temporaryPublicStorage: true
-                  runs: 3
+                  runs: 1
             - name: Format lighthouse result
               id: lighthouse_result
               if: ${{ always() }}
               uses: actions/github-script@v4
               with:
-                  github-token: ${{secrets.TOKEN_GITHUB }}
+                  github-token: ${{ secrets.TOKEN_GITHUB }}
                   script: |
                       const links = ${{ steps.lighthouse_audit.outputs.links }}
                       const results = (${{ steps.lighthouse_audit.outputs.manifest }}).filter(result => result.isRepresentativeRun);
@@ -73,7 +73,7 @@ jobs:
               if: ${{ always() }}
               uses: actions/github-script@v4
               with:
-                  github-token: ${{secrets.TOKEN_GITHUB }}
+                  github-token: ${{ secrets.TOKEN_GITHUB }}
                   script: |
                       const assertions = ${{ steps.lighthouse_audit.outputs.assertionResults }};
                       if (!assertions.length) {

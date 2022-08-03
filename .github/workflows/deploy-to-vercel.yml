@@ -77,7 +77,20 @@ jobs:
                   github-token: ${{ secrets.TOKEN_GITHUB }}
                   script: |
                       const assertions = ${{ steps.lighthouse_audit.outputs.assertionResults }}
-                      core.setOutput("comment", 'kmkmkm')
+                      if (!assertions.length) {
+                        core.setOutput("comment", '✅ Budget met, nothing to see here')
+                      } else {
+                        const comment = assertions.map((result) => {
+                          return `
+                      ❌ **${result.auditProperty || ''}.${result.auditId}** failure on [${result.url}](${result.url})
+                      *${result.auditTitle}* - [docs](${result.auditDocumentationLink})
+                      | Actual | Expected |
+                      | --- | --- |
+                      | ${result.actual} | ${result.operator} ${result.expected} |
+                      `;
+                        }).join('---');
+                        core.setOutput("comment", comment)
+                      }
                       
                     
             - name: Add Lighthouse comment to PR

@@ -17,7 +17,7 @@ jobs:
         id: loading_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
           number: ${{ github.event.issue.number }}
           header: lighthouse
           message: |
@@ -26,7 +26,7 @@ jobs:
         id: vercel_preview_url
         uses: aaron-binary/vercel-preview-url-action@v0.0.3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
       - uses: actions/checkout@v2
       - name: Audit preview URL with Lighthouse
         id: lighthouse_audit
@@ -40,7 +40,7 @@ jobs:
         id: format_lighthouse_score
         uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{secrets.TOKEN_GITHUB }}
           script: |
             const result = ${{ steps.lighthouse_audit.outputs.manifest }}[0].summary
             const links = ${{ steps.lighthouse_audit.outputs.links }}

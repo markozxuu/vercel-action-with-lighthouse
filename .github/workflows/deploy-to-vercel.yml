@@ -39,9 +39,10 @@ jobs:
                   # prefixed by the preview-url
                   urls: |
                       ${{ steps.vercel_action.outputs.preview-url }}
+                  budgetPath: '.github/lighthouse/budget.json'
                   uploadArtifacts: true
                   temporaryPublicStorage: true
-                  runs: 1
+                  runs: 3
             - name: Format lighthouse result
               id: lighthouse_result
               if: ${{ always() }}

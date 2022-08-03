@@ -1,5 +1,9 @@
 name: Audit with lighthouse
-on: [workflow_call]
+on:
+   workflow_run:
+    workflows: ["Deploy to Vercel"]
+    types: 
+      - completed
 jobs:
     deploy-to-vercel:
       uses: ./.github/workflows/deploy-to-vercel.yml

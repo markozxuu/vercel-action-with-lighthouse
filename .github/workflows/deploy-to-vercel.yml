@@ -1,18 +1,14 @@
-name: CI
-on: [push]
+name: Vercel Preview URL Lighthouse Audit
+
+on:
+  issue_comment:
+    types: [edited]
+
 jobs:
-  deploy:
-    name: Deploy ▲Vercel
+  generate_lighthouse_audit:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: amondnet/vercel-action@v19
-        with:
-            vercel-token: ${{ secrets.VERCEL_TOKEN }}
-            github-token: ${{ secrets.TOKEN_GITHUB }}
-            vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-            vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-            github-comment: true
       - name: Add comment to PR
         id: loading_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v1
@@ -64,7 +60,7 @@ jobs:
         id: comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
           number: ${{ github.event.issue.number }}
           header: lighthouse
           message: |

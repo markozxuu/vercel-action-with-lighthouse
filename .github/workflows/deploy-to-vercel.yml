@@ -1,27 +1,15 @@
-name: Capture Vercel preview URL
-
-on:
-  issue_comment:
-    types: [edited]
-
+name: Deploy to Vercel
+on: [push]
 jobs:
-  capture_vercel_preview_url:
-    name: Capture Vercel preview URL
-    runs-on: "ubuntu-latest"
+  deploy:
+    name: Deploy ▲Vercel
+    runs-on: ubuntu-latest
     steps:
-      - uses: aaimio/vercel-preview-url-action@master
-        id: vercel_preview_url
+      - uses: actions/checkout@v2
+      - uses: amondnet/vercel-action@v19
         with:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-      # Below is merely an example of what you could do with the preview URL.
-      # The preview URL is accessed through ${{ steps.<step_id>.vercel_preview_url }}
-      - uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.TOKEN_GITHUB}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'The preview URL is: ${{ steps.vercel_preview_url.outputs.vercel_preview_url }}.'
-            });
+            vercel-token: ${{ secrets.VERCEL_TOKEN }}
+            github-token: ${{ secrets.TOKEN_GITHUB }}
+            vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+            vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+            github-comment: true

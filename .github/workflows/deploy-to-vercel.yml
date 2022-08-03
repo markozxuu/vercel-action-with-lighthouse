@@ -13,10 +13,6 @@ jobs:
                   github-token: ${{ secrets.TOKEN_GITHUB }}
                   vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
                   vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-    audit_with_lighthouse:
-        needs: deploy-to-vercel
-        runs-on: ubuntu-latest
-        steps:
             - name: Audit URLs using Lighthouse
               id: lighthouse_audit
               uses: treosh/lighthouse-ci-action@v7

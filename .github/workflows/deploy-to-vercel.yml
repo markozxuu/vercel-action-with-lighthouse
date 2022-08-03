@@ -51,7 +51,7 @@ jobs:
                   github-token: ${{ secrets.TOKEN_GITHUB }}
                   script: |
                       const links = ${{ steps.lighthouse_audit.outputs.links }}
-                      core.setOutput("demo", 'test')
+                      core.setOutput("comment", 'demoooo');
 
             - name: Format budget result
               id: budget_result
